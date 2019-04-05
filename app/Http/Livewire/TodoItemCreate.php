@@ -27,7 +27,7 @@ class TodoItemCreate extends LivewireComponent
         // Event should work too
         // event(new NewTodo($todo));
 
-        // $this->emit('todos-updated');
+        $this->emit('todos-updated');
     }
 
     public function render()

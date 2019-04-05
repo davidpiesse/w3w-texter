@@ -13,57 +13,6 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 
-    {{--  Temp  --}}
-    <script>
-        function eventBus() {
-
-            //Subscriptions List
-            
-            const subscriptions = { };
-        
-            //Subscription Function
-            this.subscribe = function subscribeCallbackToEvent(eventType, callback) {
-                //If no subscription exists for a name then create one
-                if (!subscriptions[eventType]) {
-                    subscriptions[eventType] = { };
-                }
-        
-                //create a unique symbol
-                const id = Symbol('id');
-                //Assign the is to the callback
-                subscriptions[eventType][id] = callback;
-        
-                //Return with a function to unsubscribe
-                return {
-                    //Unsubscribe function
-                    unsubscribe: function unsubscribe() {
-                        //Remove the linked callback
-                        delete subscriptions[eventType][id];
-                        //If there are no more subscriptions then remove the subscription from the list
-                        if (Object.getOwnPropertySymbols(subscriptions[eventType]).length === 0) {
-                            delete subscriptions[eventType];
-                        }
-                    },
-                };
-            };
-        
-            //Publish an event 
-            this.publish = function publishEventWithArgs(eventType, callback) {
-                //If there is no subscription of that name then just return
-                if (!subscriptions[eventType]){
-                    console.warn('Nothing subscribed to this event yet')
-                    return;
-                }
-                //Run every callback linked to that subscription
-                Object.getOwnPropertySymbols(subscriptions[eventType])
-                .forEach(key => subscriptions[eventType][key](callback));
-            };
-        
-        }
-
-        window.eventBus = new eventBus()
-    </script>
-
     {!! Livewire::scripts() !!}
 
     <script data-turbolinks-suppress-warning src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js"></script>
