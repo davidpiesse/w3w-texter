@@ -7,6 +7,7 @@ use Livewire\LivewireComponent;
 
 class TodoItemDelete extends LivewireComponent
 {
+
     public function deleteAll(){
         TodoItem::all()->each(function($item){
             $item->delete();

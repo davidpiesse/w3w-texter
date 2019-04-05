@@ -1,5 +1,4 @@
 <div>
-    {{--  <ul class="list-group" wire:listen="todos-updated:updateList">  --}}
     <ul class="list-group">
         @forelse ($todos as $todo)
         <li class="list-group-item">{{ $todo->name }}</li>

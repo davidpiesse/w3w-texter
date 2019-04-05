@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\LivewireComponent;
 use App\TodoItem;
+use Livewire\LivewireComponent;
+use App\Events\NewTodo;
 
 class TodoList extends LivewireComponent
 {
-    //will auto be sent as is :)
+    //For local listeners NOT Echo
     public $listeners = [
         'todos-updated' => 'updateList'
     ];
@@ -15,11 +16,11 @@ class TodoList extends LivewireComponent
     public $todos; 
 
     public function created(){
-        $this->todos = TodoItem::all();
+        $this->attachEchoPublicListener('todos','NewTodo', 'todos-updated');
+        // $this->attachEchoPrivateListener('todos','NewTodo', 'todos-updated');
+        // $this->attachEchoPresenceListener('todos','here', 'todos-updated');
 
-        // $this->listenFor([
-        //     'todos-updated' => 'updateList'
-        // ]);
+        $this->todos = TodoItem::all();
     }
 
     public function updateList(){

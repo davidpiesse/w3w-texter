@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\TodoItem;
+use App\Events\NewTodo;
 use Livewire\LivewireComponent;
 
 class TodoItemCreate extends LivewireComponent
@@ -10,7 +11,8 @@ class TodoItemCreate extends LivewireComponent
     public $todo;
 
     public function createTodo(){
-        TodoItem::create([
+
+        $todo = TodoItem::create([
             'name' => $this->todo
         ]);
 
@@ -19,7 +21,13 @@ class TodoItemCreate extends LivewireComponent
 
         // Need to reset event handlers
         //keeps this from last time
-        $this->emit('todos-updated');
+
+        //broadcasting to all BUT me
+        broadcast(new NewTodo($todo));
+        // Event should work too
+        // event(new NewTodo($todo));
+
+        // $this->emit('todos-updated');
     }
 
     public function render()
